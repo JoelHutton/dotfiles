@@ -115,6 +115,7 @@ export LM_LICENSE_FILE=7010@cam-lic05.cambridge.arm.com:7010@cam-lic07.cambridge
 export PATH=$PATH:$HOME/bin/gcc-linaro-6.3.1-2017.05-x86_64_arm-eabi/bin
 export PATH=$PATH:$HOME/bin/gcc-linaro-6.2.1-2016.11-x86_64_aarch64-linux-gnu/bin
 export PATH=$PATH:$HOME/bin/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin
+export PATH=$PATH:$HOME/bin/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-elf/bin/
 #export PATH=$PATH:/arm/tools/coverity/static-analysis/8.7.1/bin
 export CROSS_COMPILE_64=aarch64-linux-gnu-
 export CROSS_COMPILE_32=arm-linux-gnueabihf-
