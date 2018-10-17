@@ -47,9 +47,16 @@ bindkey '^x^e' edit-command-line
 bindkey '^[[Z' reverse-menu-complete
 
 # Set up the prompt
-autoload -Uz promptinit
-promptinit
-prompt adam1
+#autoload -Uz promptinit
+#promptinit
+#prompt adam1
+NEWLINE=$'\n'
+#        background blue |
+#        foreground white|
+#                        |   Date + format       user@host
+#                                                      directory
+#                                                        color                newline
+PROMPT="%{%K{blue}%F{white}%}[%D{%f-%mT%L:%M:%S}]%n@%M:%d%{%K{none}%F{white}%}${NEWLINE}%%"
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
