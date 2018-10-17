@@ -47,10 +47,23 @@ bindkey '^x^e' edit-command-line
 bindkey '^[[Z' reverse-menu-complete
 
 # Set up the prompt
-autoload -Uz promptinit
-promptinit
-prompt adam1
-
+NEWLINE=$'\n'
+#white timestamp, set bold, blue background
+PROMPT="%{%K{blue}%F{white}%B%}[%D{%f-%mT%L:%M:%S}]"
+#green user
+PROMPT=$PROMPT"%{%F{green}%}%n"
+#white separator
+PROMPT=$PROMPT"%{%F{white}%}@"
+#green host
+PROMPT=$PROMPT"%{%F{green}%}%M"
+#white separator
+PROMPT=$PROMPT"%{%F{white}%B%}:"
+#green directory
+PROMPT=$PROMPT"%{%F{green}%}%d"
+#newline, remove colors
+PROMPT=$PROMPT"%{%K{none}%F{none}%}${NEWLINE}%% "
+#unbold
+PROMPT=$PROMPT"%{%b%}"
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -74,9 +87,9 @@ autoload -Uz compinit
 compinit
 
 vim () {
-    echo -ne "\033]12;Orange1\007";
-    /usr/bin/vim "-p" "$@";
-    echo -ne "\033]12;White\007";
+	echo -ne "\033]12;Orange1\007";
+	/usr/bin/vim "-p" "$@";
+	echo -ne "\033]12;White\007";
 }
 
 setopt inc_append_history
