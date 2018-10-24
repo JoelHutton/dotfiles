@@ -49,7 +49,7 @@ bindkey '^[[Z' reverse-menu-complete
 # Set up the prompt
 NEWLINE=$'\n'
 #white timestamp, set bold, blue background
-PROMPT="%{%K{blue}%F{white}%B%}[%D{%f-%mT%L:%M:%S}]"
+PROMPT="%{%K{blue}%F{white}%B%}[%D{%f-%mT%H:%M:%S}]"
 #green user
 PROMPT=$PROMPT"%{%F{green}%}%n"
 #white separator
@@ -64,6 +64,8 @@ PROMPT=$PROMPT"%{%F{green}%}%d"
 PROMPT=$PROMPT"%{%K{none}%F{none}%}${NEWLINE}%% "
 #unbold
 PROMPT=$PROMPT"%{%b%}"
+
+
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -117,10 +119,20 @@ then
 			tmux >/dev/null
 		fi
 	fi
+else
+	#capture a pane
+	alias cap="tmux capture-pane -pS - > .tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
+	#edit a captured pane in vim
+	alias ecap="HIST=.tmux.history.\$DATE\`date '+%Y-%m-%dT%H:%M:%S'\` && tmux capture-pane -pS - > \$HIST && vim \$HIST"
+	#save a pane when exiting
+	alias exit="tmux capture-pane -pS - > .tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`; exit"
 fi
 
 # Global git hooks
 git config --global core.hooksPath $HOME/git/scripts/githooks
+
+# do not store commands that are wrong in history
+zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # ARM part
 export ARMLMD_LICENSE_FILE=7010@euhpc-lic03.euhpc.arm.com:7010@euhpc-lic04.euhpc.arm.com:7010@euhpc-lic05.euhpc.arm.com:7010@euhpc-lic07.euhpc.arm.com
@@ -139,3 +151,4 @@ umask 0027
 REMOTE_HOME=joehut01@e115011-lin.cambridge.arm.com:/home/joehut01/
 export SVALBARD_USER=joel
 alias ds5='/usr/local/DS-5_v5.28.1/bin/eclipse'
+
