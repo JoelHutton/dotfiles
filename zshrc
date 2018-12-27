@@ -102,7 +102,9 @@ alias gitresetrealhard='~/git/scripts/gitresetrealhard.sh'
 alias dd='dd status=progress'
 alias topub="/home/$USER/git/scripts/send_to_pub.sh"
 alias svim='sudo -H vim -p'
-
+alias cfind="find . -regex '.*\.c\|.*\.h\|.*\.S\|.*\.s'"
+alias cgrep="cfind | xargs grep --color"
+alias swpfind="find . -regex '.*\.sw.'"
 #TMUX
 # If you are running within a tmux session, do nothing
 if [ -z "$TMUX" ]
@@ -113,7 +115,8 @@ then
 		# If there are existing sessions, connect to the first one
 		if tmux ls >/dev/null
 		then
-			tmux attach > /dev/null
+			echo "tmux sessions running:"
+			tmux ls
 		else
 			# Otherwise start a new session
 			tmux >/dev/null
@@ -121,18 +124,18 @@ then
 	fi
 else
 	#capture a pane
-	alias cap="tmux capture-pane -pS - > .tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
+	alias cap="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
 	#edit a captured pane in vim
-	alias ecap="HIST=.tmux.history.\$DATE\`date '+%Y-%m-%dT%H:%M:%S'\` && tmux capture-pane -pS - > \$HIST && vim \$HIST"
+	alias ecap="HIST=$HOME/.tmux.history.\$DATE\`date '+%Y-%m-%dT%H:%M:%S'\` && tmux capture-pane -pS - > \$HIST && vim \$HIST"
 	#save a pane when exiting
-	alias exit="tmux capture-pane -pS - > .tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`; exit"
+	alias capexit="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`; exit"
 fi
 
 # Global git hooks
 git config --global core.hooksPath $HOME/git/scripts/githooks
 
-# do not store commands that are wrong in history
-zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
+# do not store commands that are wrong in history (disabled because it gets annoying)
+#zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # ARM part
 export ARMLMD_LICENSE_FILE=7010@euhpc-lic03.euhpc.arm.com:7010@euhpc-lic04.euhpc.arm.com:7010@euhpc-lic05.euhpc.arm.com:7010@euhpc-lic07.euhpc.arm.com
@@ -142,13 +145,11 @@ export PATH=$PATH:$HOME/bin/gcc-linaro-6.2.1-2016.11-x86_64_aarch64-linux-gnu/bi
 export PATH=$PATH:$HOME/bin/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin
 export PATH=$PATH:$HOME/bin/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-elf/bin/
 #export PATH=$PATH:/arm/tools/coverity/static-analysis/8.7.1/bin
-export CROSS_COMPILE_64=aarch64-linux-gnu-
-export CROSS_COMPILE_32=arm-linux-gnueabihf-
-export CROSS_COMPILE_EABI=arm-eabi-
+export CC64=aarch64-linux-gnu-
+export CC32=arm-linux-gnueabihf-
+export CCEABI=arm-eabi-
 export CHECKPATCH=$HOME/bin/checkpatch/checkpatch.pl
-export CROSS_COMPILE=$CROSS_COMPILE_64
 umask 0027
 REMOTE_HOME=joehut01@e115011-lin.cambridge.arm.com:/home/joehut01/
 export SVALBARD_USER=joel
 alias ds5='/usr/local/DS-5_v5.28.1/bin/eclipse'
-
