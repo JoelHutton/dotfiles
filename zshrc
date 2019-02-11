@@ -2,6 +2,12 @@ export EDITOR='/usr/bin/vim'
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:$HOME/git/scripts"
 
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "SESSION_TYPE" = "remote/ssh" ]
+then
+	SESSION_TYPE=remote/ssh
+	export SESSION_TYPE
+fi
+
 # Keep 1,000,000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000000
 SAVEHIST=1000000
@@ -128,6 +134,19 @@ else
 	alias ecap="HIST=$HOME/.tmux.history.\$DATE\`date '+%Y-%m-%dT%H:%M:%S'\` && tmux capture-pane -pS - > \$HIST && vim \$HIST"
 	#save a pane when exiting
 	alias capexit="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`; exit"
+
+	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "SESSION_TYPE" = "remote/ssh" ]; then
+	  export SESSION_TYPE=remote/ssh
+	fi
+
+	if [ "$SESSION_TYPE" = "remote/ssh" ]
+	then
+		echo "in ssh session!!"
+		tmux set status-position top
+		tmux set status-bg white
+		tmux set status-fg black
+		tmux set prefix C-n
+	fi
 fi
 
 # Global git hooks
