@@ -106,7 +106,6 @@ alias cfind="find . -regex '.*\.c\|.*\.h\|.*\.S\|.*\.s'"
 alias cgrep="cfind | xargs grep --color"
 alias swpfind="find . -regex '.*\.sw.'"
 #TMUX
-# If you are running within a tmux session, do nothing
 if [ -z "$TMUX" ]
 then
 	# Check tmux exists on this machine
@@ -138,18 +137,25 @@ git config --global core.hooksPath $HOME/git/scripts/githooks
 #zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # ARM part
+alias actbusy='while true; do make PLAT=fvp CROSS_COMPILE=$CC64 DEBUG=1 all && make realclean; done'
 export ARMLMD_LICENSE_FILE=7010@euhpc-lic03.euhpc.arm.com:7010@euhpc-lic04.euhpc.arm.com:7010@euhpc-lic05.euhpc.arm.com:7010@euhpc-lic07.euhpc.arm.com
 export LM_LICENSE_FILE=7010@cam-lic05.cambridge.arm.com:7010@cam-lic07.cambridge.arm.com:7010@cam-lic03.cambridge.arm.com:7010@cam-lic04.cambridge.arm.com
 export PATH=$PATH:$HOME/bin/gcc-linaro-6.3.1-2017.05-x86_64_arm-eabi/bin
 export PATH=$PATH:$HOME/bin/gcc-linaro-6.2.1-2016.11-x86_64_aarch64-linux-gnu/bin
 export PATH=$PATH:$HOME/bin/gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf/bin
 export PATH=$PATH:$HOME/bin/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-elf/bin/
+export PATH=$PATH:$HOME/bin/gcc-arm-none-eabi-5_4-2016q3/bin
 #export PATH=$PATH:/arm/tools/coverity/static-analysis/8.7.1/bin
 export CC64=aarch64-linux-gnu-
 export CC32=arm-linux-gnueabihf-
 export CCEABI=arm-eabi-
+export CCNONEEABI=arm-none-eabi
 export CHECKPATCH=$HOME/bin/checkpatch/checkpatch.pl
 umask 0027
 REMOTE_HOME=joehut01@e115011-lin.cambridge.arm.com:/home/joehut01/
 export SVALBARD_USER=joel
 alias ds5='/usr/local/DS-5_v5.28.1/bin/eclipse'
+if [ -f $HOME/.messages ]
+then
+	cat $HOME/.messages
+fi
