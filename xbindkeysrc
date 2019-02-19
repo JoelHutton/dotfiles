@@ -67,11 +67,9 @@
 
 #bind marathon thumb button
 #"xte 'keydown Control_L' && sleep 0.2 && xte 'key 0x5c' && xte 'keyup Control_L'"
-"gnome-screensaver-command -l"
+"DISPLAY=:0 xdg-screensaver lock"
 b:10
 
-"gnome-screensaver-command -l"
-c:104
 ##################################
 # End of xbindkeys configuration #
 ##################################
