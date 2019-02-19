@@ -141,6 +141,7 @@ else
 
 	if [ "$SESSION_TYPE" = "remote/ssh" ]
 	then
+		echo "in ssh session, setting up tmux for ssh"
 		tmux set status-bg white
 		tmux set status-fg black
 		tmux set prefix C-n
