@@ -112,22 +112,9 @@ alias cfind="find . -regex '.*\.c\|.*\.h\|.*\.S\|.*\.s'"
 alias cgrep="cfind | xargs grep --color"
 alias swpfind="find . -regex '.*\.sw.'"
 #TMUX
-if [ -z "$TMUX" ]
+# Check tmux exists on this machine
+if which "tmux" > /dev/null
 then
-	# Check tmux exists on this machine
-	if which "tmux" > /dev/null
-	then
-		# If there are existing sessions, connect to the first one
-		if tmux ls >/dev/null
-		then
-			echo "tmux sessions running:"
-			tmux ls
-		else
-			# Otherwise start a new session
-			tmux >/dev/null
-		fi
-	fi
-else
 	#capture a pane
 	alias cap="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
 	#edit a captured pane in vim
@@ -136,15 +123,35 @@ else
 	alias capexit="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`; exit"
 
 	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "SESSION_TYPE" = "remote/ssh" ]; then
-	  export SESSION_TYPE=remote/ssh
+		export SESSION_TYPE=remote/ssh
 	fi
 
-	if [ "$SESSION_TYPE" = "remote/ssh" ]
+	if [ -z "$TMUX" ]
 	then
-		echo "in ssh session, setting up tmux for ssh"
-		tmux set status-bg white
-		tmux set status-fg black
-		tmux set prefix C-n
+			# If there are existing sessions, connect to the first one
+			if tmux ls >/dev/null
+			then
+				echo "tmux sessions running:"
+				tmux ls
+			else
+				# Otherwise start a new session
+				tmux >/dev/null
+				if [ "$SESSION_TYPE" = "remote/ssh" ]
+				then
+					echo "in ssh session, setting up tmux for ssh"
+					tmux set status-bg white
+					tmux set status-fg black
+					tmux set prefix C-n
+				fi
+			fi
+	else
+		if [ "$SESSION_TYPE" = "remote/ssh" ]
+		then
+			echo "in ssh session, setting up tmux for ssh"
+			tmux set status-bg white
+			tmux set status-fg black
+			tmux set prefix C-n
+		fi
 	fi
 fi
 
