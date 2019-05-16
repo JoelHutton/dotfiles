@@ -1,6 +1,6 @@
 #!/bin/bash
 dir="$( cd "$( dirname "$0" )" && pwd )"
-for file in .vimrc .zshrc .tmux.conf
+for file in .vimrc .zshrc .tmux.conf .xbindkeysrc
 do
 	if [ -e "$HOME/$file" ] || [ -L "$HOME/$file" ]
 	then
@@ -11,6 +11,7 @@ done
 ln -sf $dir/vimrc $HOME/.vimrc
 ln -sf $dir/zshrc $HOME/.zshrc
 ln -sf $dir/tmux.conf $HOME/.tmux.conf
+ln -sf $dir/xbindkeysrc $HOME/.xbindkeysrc
 ls -al $HOME/.vimrc
 ls -al $HOME/.zshrc
 ls -al $HOME/.tmux.conf

@@ -92,6 +92,7 @@ set smartcase       " Do smart case matching
 set incsearch       " Incremental search
 set autowrite       " Automatically save before commands like :next and :make
 set hidden          " Hide buffers when they are abandoned
+set bs=2            " Enable backspace over anything
 set mouse=inv       " Enable mouse usage in insert, normal, visual modes
 
 "set tabs as 4 spaces

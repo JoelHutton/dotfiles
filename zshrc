@@ -2,6 +2,12 @@ export EDITOR='/usr/bin/vim'
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:$HOME/git/scripts"
 
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "SESSION_TYPE" = "remote/ssh" ]
+then
+	SESSION_TYPE=remote/ssh
+	export SESSION_TYPE
+fi
+
 # Keep 1,000,000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000000
 SAVEHIST=1000000
@@ -102,39 +108,61 @@ alias gitresetrealhard='~/git/scripts/gitresetrealhard.sh'
 alias dd='dd status=progress'
 alias topub="/home/$USER/git/scripts/send_to_pub.sh"
 alias svim='sudo -H vim -p'
-
+alias cfind="find . -regex '.*\.c\|.*\.h\|.*\.S\|.*\.s'"
+alias cgrep="cfind | xargs grep --color"
+alias swpfind="find . -regex '.*\.sw.'"
 #TMUX
-# If you are running within a tmux session, do nothing
-if [ -z "$TMUX" ]
+# Check tmux exists on this machine
+if which "tmux" > /dev/null
 then
-	# Check tmux exists on this machine
-	if which "tmux" > /dev/null
+	#capture a pane
+	alias cap="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
+	#edit a captured pane in vim
+	alias ecap="HIST=$HOME/.tmux.history.\$DATE\`date '+%Y-%m-%dT%H:%M:%S'\` && tmux capture-pane -pS - > \$HIST && vim \$HIST"
+	#save a pane when exiting
+	alias capexit="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`; exit"
+
+	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "SESSION_TYPE" = "remote/ssh" ]; then
+		export SESSION_TYPE=remote/ssh
+	fi
+
+	if [ -z "$TMUX" ]
 	then
-		# If there are existing sessions, connect to the first one
-		if tmux ls >/dev/null
+			# If there are existing sessions, connect to the first one
+			if tmux ls >/dev/null
+			then
+				echo "tmux sessions running:"
+				tmux ls
+			else
+				# Otherwise start a new session
+				tmux >/dev/null
+				if [ "$SESSION_TYPE" = "remote/ssh" ]
+				then
+					echo "in ssh session, setting up tmux for ssh"
+					tmux set status-bg white
+					tmux set status-fg black
+					tmux set prefix C-n
+				fi
+			fi
+	else
+		if [ "$SESSION_TYPE" = "remote/ssh" ]
 		then
-			tmux attach > /dev/null
-		else
-			# Otherwise start a new session
-			tmux >/dev/null
+			echo "in ssh session, setting up tmux for ssh"
+			tmux set status-bg white
+			tmux set status-fg black
+			tmux set prefix C-n
 		fi
 	fi
-else
-	#capture a pane
-	alias cap="tmux capture-pane -pS - > .tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
-	#edit a captured pane in vim
-	alias ecap="HIST=.tmux.history.\$DATE\`date '+%Y-%m-%dT%H:%M:%S'\` && tmux capture-pane -pS - > \$HIST && vim \$HIST"
-	#save a pane when exiting
-	alias exit="tmux capture-pane -pS - > .tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`; exit"
 fi
 
 # Global git hooks
 # git config --global core.hooksPath $HOME/git/scripts/githooks
 
-# do not store commands that are wrong in history
-zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
+# do not store commands that are wrong in history (disabled because it gets annoying)
+#zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # ARM part
+alias actbusy='while true; do make PLAT=fvp CROSS_COMPILE=$CC64 DEBUG=1 all && make realclean; done'
 export ARMLMD_LICENSE_FILE=7010@euhpc-lic03.euhpc.arm.com:7010@euhpc-lic04.euhpc.arm.com:7010@euhpc-lic05.euhpc.arm.com:7010@euhpc-lic07.euhpc.arm.com
 export LM_LICENSE_FILE=7010@cam-lic05.cambridge.arm.com:7010@cam-lic07.cambridge.arm.com:7010@cam-lic03.cambridge.arm.com:7010@cam-lic04.cambridge.arm.com
 export PATH=$HOME/gnu-work/tools/bin:$PATH
@@ -143,7 +171,9 @@ export CC32=arm-linux-gnueabihf-
 export CCEABI=arm-eabi-
 export CCNONEEABI=arm-none-eabi
 export CHECKPATCH=$HOME/bin/checkpatch/checkpatch.pl
-export CROSS_COMPILE=$CROSS_COMPILE_64
 umask 0027
 alias ds5='/usr/local/DS-5_v5.28.1/bin/eclipse'
-
+if [ -f $HOME/.messages ]
+then
+	cat $HOME/.messages
+fi
