@@ -100,6 +100,28 @@ vim () {
 	echo -ne "\033]12;White\007";
 }
 
+bak () {
+	bn=`basename $1`
+	dn=`dirname $1`
+	echo "moving $dn/$bn to $dn/.bak.$bn"
+	mv $dn/$bn $dn/.bak.$bn
+}
+
+rec () {
+	bn=`basename $1`
+	dn=`dirname $1`
+	echo "moving $dn/.bak.$bn to $dn/$bn"
+	mv $dn/.bak.$bn $dn/$bn
+}
+
+cpdeep () {
+	bn=`basename $1`
+	dn=`dirname $1`
+	newname=$2
+	echo "moving $dn/$bn to $dn/$newname"
+	mv $dn/$bn $dn/$newname
+}
+
 setopt inc_append_history
 export SHELL=/usr/bin/zsh
 alias copy='rsync -aPhr --progress'
