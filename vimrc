@@ -134,3 +134,21 @@ au FileType gitcommit au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%72v.', -
 
 "for when you open a file without sudo by mistake
 command W w !sudo tee % > /dev/null
+
+"modifiedflag, charcount, filepercent, filepath
+set statusline=%=%m\ %c\ %P\ %f
+
+"The Leader
+let mapleader="\<Space>"
+
+"save current buffer
+nnoremap <leader>w :w<cr>
+
+"replace the word under cursor
+nnoremap <leader>* :%s/<c-r><c-w>//g<left><left>
+
+"move lines around
+nnoremap <leader>k :m-2<cr>==
+nnoremap <leader>j :m+<cr>==
+xnoremap <leader>k :m-2<cr>gv=gv
+xnoremap <leader>j :m'>+<cr>gv=gv
