@@ -30,6 +30,13 @@ if has("autocmd")
 	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+
+" highlight gcc machine description files
+if has("autocmd")
+	autocmd BufRead *.md  set syntax=gcc-rtl
+	autocmd BufRead *.md  set filetype=gcc-rtl
+endif
+
 " have Vim load indentation rules and plugins
 " according to the detected filetype.
 if has("autocmd")
@@ -71,8 +78,6 @@ nmap mO :set<Space>mouse=inv<Cr>:set<Space>nu<Cr>:set<Space>nopaste<Cr>
 
 "in normal mode map ; to the command console
 nmap ; :
-"in command mode double tap ; to submit command
-cmap ;; <Cr>
 "in command mode double tap directional keys to navigate previous commands
 cmap kk <Up>
 cmap jj <Down>
@@ -152,3 +157,36 @@ nnoremap <leader>k :m-2<cr>==
 nnoremap <leader>j :m+<cr>==
 xnoremap <leader>k :m-2<cr>gv=gv
 xnoremap <leader>j :m'>+<cr>gv=gv
+
+"quickly save-quit/save/quit
+noremap <leader>x :x<Cr>
+noremap <leader>w :w<Cr>
+noremap <leader>q :q<Cr>
+xnoremap <leader>x :x<Cr>
+xnoremap <leader>w :w<Cr>
+xnoremap <leader>q :q<Cr>
+noremap <leader>f :set foldmethod=syntax<Cr>
+
+"set filetype to lisp (useful for many gcc formats)
+nnoremap <leader>l :set filetype=lisp<Cr>
+
+"quick cpp style comment out line
+au FileType c noremap <leader>c 0I//<Esc>
+au FileType c xnoremap <leader>c 0I//<Esc>
+au FileType cpp noremap <leader>c 0I//<Esc>
+au FileType cpp xnoremap <leader>c 0I//<Esc>
+au FileType cc noremap <leader>c 0I//<Esc>
+au FileType cc xnoremap <leader>c 0I//<Esc>
+au FileType sh noremap <leader>c 0I#<Esc>
+au FileType sh xnoremap <leader>c 0I#<Esc>
+au FileType gcc-rtl noremap <leader>c 0I;;<Esc>
+au FileType gcc-rtl xnoremap <leader>c 0I;;<Esc>
+
+" Create extra whitespace highlight group in red.
+highlight ExtraWhitespace ctermbg=red guibg=red
+" Match whitespace at end of line.
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+" Match 8 spaces anywhere.
+autocmd BufWinEnter *.md match ExtraWhitespace /\ \{8,}/
+" Match space before tab anywhere.
+autocmd BufWinEnter *.md match ExtraWhitespace /\ \t/
