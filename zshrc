@@ -118,6 +118,14 @@ cpdeep () {
 	bn=`basename $1`
 	dn=`dirname $1`
 	newname=$2
+	echo "copying $dn/$bn to $dn/$newname"
+	cp $dn/$bn $dn/$newname
+}
+
+mvdeep () {
+	bn=`basename $1`
+	dn=`dirname $1`
+	newname=$2
 	echo "moving $dn/$bn to $dn/$newname"
 	mv $dn/$bn $dn/$newname
 }
@@ -184,9 +192,6 @@ fi
 #zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # ARM part
-alias actbusy='while true; do make PLAT=fvp CROSS_COMPILE=$CC64 DEBUG=1 all && make realclean; done'
-export ARMLMD_LICENSE_FILE=7010@euhpc-lic03.euhpc.arm.com:7010@euhpc-lic04.euhpc.arm.com:7010@euhpc-lic05.euhpc.arm.com:7010@euhpc-lic07.euhpc.arm.com
-export LM_LICENSE_FILE=7010@cam-lic05.cambridge.arm.com:7010@cam-lic07.cambridge.arm.com:7010@cam-lic03.cambridge.arm.com:7010@cam-lic04.cambridge.arm.com
 export PATH=$HOME/gnu-work/tools/bin:$PATH
 export CC64=aarch64-linux-gnu-
 export CC32=arm-linux-gnueabihf-
