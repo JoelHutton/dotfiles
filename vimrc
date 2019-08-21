@@ -102,9 +102,9 @@ set mouse=inv       " Enable mouse usage in insert, normal, visual modes
 
 "set tabs as 4 spaces
 "filetype plugin indent on
-"set tabstop=4
-"set shiftwidth=4
-"set expandtab
+set tabstop=8
+set shiftwidth=2
+set noexpandtab
 "set pastetoggle=<F3>
 
 "show leading tabs, trailing spaces, eol
@@ -190,3 +190,10 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter *.md match ExtraWhitespace /\ \{8,}/
 " Match space before tab anywhere.
 autocmd BufWinEnter *.md match ExtraWhitespace /\ \t/
+
+"persistent undo
+set undofile
+set undodir=~/.vim/undo-dir
+
+"status bar at bottom
+set laststatus=2
