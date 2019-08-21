@@ -1,6 +1,7 @@
-export EDITOR='/usr/bin/vim'
+export EDITOR='nvim'
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:$HOME/git/scripts"
+export PATH="$PATH:$HOME/bin"
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "SESSION_TYPE" = "remote/ssh" ]
 then
@@ -96,7 +97,7 @@ compinit
 
 vim () {
 	echo -ne "\033]12;Orange1\007";
-	/usr/bin/vim "-p" "$@";
+	nvim "-p" "$@";
 	echo -ne "\033]12;White\007";
 }
 
