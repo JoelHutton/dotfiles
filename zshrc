@@ -69,13 +69,14 @@ PROMPT=$PROMPT"%{%F{white}%}@"
 
 host_fhash=`md5sum /etc/hostname | cut -c1-2`
 HOST_FHASH=`echo $host_fhash | awk '{ print toupper($0) }' `
-HOST_FNUM=`echo "obase=10; ibase=16; $HOST_FHASH" | bc`
+HOST_FNUM=`printf "%d" 0x$HOST_FHASH`
+
 host_bhash=`echo $hosh_fhash | md5sum | cut -c1-2`
 HOST_BHASH=`echo $host_bhash | awk '{ print toupper($0) }' `
-HOST_NUM=`echo "obase=10; ibase=16; $HOST_BHASH" | bc`
+HOST_BNUM=`printf "%d" 0x$HOST_BHASH`
 
-HOST_FCOLOR=`expr $HOST_NUM % 8`
-HOST_BCOLOR=`expr $(expr $HOST_NUM + 4) % 8`
+HOST_FCOLOR=`expr $HOST_FNUM % 8`
+HOST_BCOLOR=`expr $HOST_BNUM % 8`
 
 PROMPT=$PROMPT"%{%F{$HOST_FCOLOR}%K{$HOST_BCOLOR}%}%M"
 
