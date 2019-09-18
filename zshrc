@@ -65,8 +65,6 @@ PROMPT=$PROMPT"%{%F{white}%}@"
 #PROMPT=$PROMPT"%{%F{green}%}%M"
 
 #give each host a unique color
-#
-
 host_fhash=`md5sum /etc/hostname | cut -c1-2`
 HOST_FHASH=`echo $host_fhash | awk '{ print toupper($0) }' `
 HOST_FNUM=`printf "%d" 0x$HOST_FHASH`
@@ -77,6 +75,12 @@ HOST_BNUM=`printf "%d" 0x$HOST_BHASH`
 
 HOST_FCOLOR=`expr $HOST_FNUM % 8`
 HOST_BCOLOR=`expr $HOST_BNUM % 8`
+
+if [[ "$HOST_FCOLOR" == "$HOST_BCOLOR" ]]
+then
+  HOST_BCOLOR=`expr $HOST_FCOLOR + 4`
+  HOST_BCOLOR=`expr $HOST_BCOLOR % 8`
+fi
 
 PROMPT=$PROMPT"%{%F{$HOST_FCOLOR}%K{$HOST_BCOLOR}%}%M"
 
@@ -163,6 +167,8 @@ alias swpfind="find . -regex '.*\.sw.'"
 # Check tmux exists on this machine
 if which "tmux" > /dev/null
 then
+	tmux set status-bg $HOST_BCOLOR
+	tmux set status-fg $HOST_FCOLOR
 	#capture a pane
 	alias cap="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
 	#edit a captured pane in vim
@@ -187,8 +193,6 @@ then
 				if [ "$SESSION_TYPE" = "remote/ssh" ]
 				then
 					echo "in ssh session, setting up tmux for ssh"
-					tmux set status-bg white
-					tmux set status-fg black
 					tmux set prefix C-n
 					tmux set -g mouse off
 				fi
@@ -197,8 +201,6 @@ then
 		if [ "$SESSION_TYPE" = "remote/ssh" ]
 		then
 			echo "in ssh session, setting up tmux for ssh"
-			tmux set status-bg white
-			tmux set status-fg black
 			tmux set prefix C-n
 		fi
 	fi
@@ -223,14 +225,3 @@ if [ -f $HOME/.messages ]
 then
 	cat $HOME/.messages
 fi
-
-#HOSTPROMPT="%M"
-#COLOR=25
-#for STYLE in "38;5"
-#do
-#    TAG="\033[${STYLE};${COLOR}m"
-#    export PROMPT="${HOSTNAME};${COLOR}"
-#    zsh
-#    echo -ne "${TAG}${STR}${NONE}  "
-#done
-#echo
