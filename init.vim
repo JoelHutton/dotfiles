@@ -212,6 +212,7 @@ set laststatus=0
 
 "quick go to definition
 noremap <leader>d :YcmCompleter GoToDefinition<Cr>
+noremap <leader>D :YcmCompleter GoToDefinition<Cr>
 
 "quick return
 noremap <leader>o <C-o>
@@ -229,4 +230,5 @@ noremap <leader>c :Continue<Cr>
 noremap <leader>b :Break<Cr>
 noremap <leader>r :Run<Cr>
 noremap <leader>e :Eval<Cr>
-noremap <leader>t :vsplit term://zsh<Cr>i
+noremap <leader>t :vsplit term://zsh<Cr>:set nonu<Cr>i
+noremap <leader>T :split term://zsh<Cr>:set nonu<Cr>i
