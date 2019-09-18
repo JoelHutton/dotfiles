@@ -62,9 +62,18 @@ PROMPT=$PROMPT"%{%F{green}%}%n"
 #white separator
 PROMPT=$PROMPT"%{%F{white}%}@"
 #green host
-PROMPT=$PROMPT"%{%F{green}%}%M"
+#PROMPT=$PROMPT"%{%F{green}%}%M"
+
+#give each host a unique color
+host_hash=`md5sum /etc/hostname | cut -c1-2`
+HOST_HASH=`echo $host_hash | awk '{ print toupper($0) }' `
+HOST_NUM=`echo "obase=10; ibase=16; $HOST_HASH" | bc`
+HOST_COLOR=`expr $HOST_NUM % 7`
+
+PROMPT=$PROMPT"%{%F{green}%K{$HOST_COLOR}%}%M"
+
 #white separator
-PROMPT=$PROMPT"%{%F{white}%B%}:"
+PROMPT=$PROMPT"%{%F{white}%K{blue}%B%}:"
 #green directory
 PROMPT=$PROMPT"%{%F{green}%}%d"
 #newline, remove colors
@@ -173,6 +182,7 @@ then
 					tmux set status-bg white
 					tmux set status-fg black
 					tmux set prefix C-n
+					tmux set -g mouse off
 				fi
 			fi
 	else
@@ -205,3 +215,14 @@ if [ -f $HOME/.messages ]
 then
 	cat $HOME/.messages
 fi
+
+#HOSTPROMPT="%M"
+#COLOR=25
+#for STYLE in "38;5"
+#do
+#    TAG="\033[${STYLE};${COLOR}m"
+#    export PROMPT="${HOSTNAME};${COLOR}"
+#    zsh
+#    echo -ne "${TAG}${STR}${NONE}  "
+#done
+#echo
