@@ -69,7 +69,7 @@ host_fhash=`md5sum /etc/hostname | cut -c1-2`
 HOST_FHASH=`echo $host_fhash | awk '{ print toupper($0) }' `
 HOST_FNUM=`printf "%d" 0x$HOST_FHASH`
 
-host_bhash=`echo $hosh_fhash | md5sum | cut -c1-2`
+host_bhash=`echo $host_fhash | md5sum | cut -c1-2`
 HOST_BHASH=`echo $host_bhash | awk '{ print toupper($0) }' `
 HOST_BNUM=`printf "%d" 0x$HOST_BHASH`
 
