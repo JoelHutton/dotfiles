@@ -1,4 +1,3 @@
-export EDITOR='nvim'
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:$HOME/git/scripts"
 export PATH="$PATH:$HOME/bin"
@@ -116,9 +115,19 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 autoload -Uz compinit
 compinit
 
+if which "nvim" > /dev/null
+then
+  export EDITOR='nvim'
+elif which "vim" > /dev/null
+then
+  export EDITOR='vim'
+else
+  export EDITOR='vi'
+fi
+
 vim () {
 	echo -ne "\033]12;Orange1\007";
-	nvim "-p" "$@";
+	$EDITOR "$@";
 	echo -ne "\033]12;White\007";
 }
 
