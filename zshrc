@@ -65,12 +65,19 @@ PROMPT=$PROMPT"%{%F{white}%}@"
 #PROMPT=$PROMPT"%{%F{green}%}%M"
 
 #give each host a unique color
-host_hash=`md5sum /etc/hostname | cut -c1-2`
-HOST_HASH=`echo $host_hash | awk '{ print toupper($0) }' `
-HOST_NUM=`echo "obase=10; ibase=16; $HOST_HASH" | bc`
-HOST_COLOR=`expr $HOST_NUM % 7`
+#
 
-PROMPT=$PROMPT"%{%F{green}%K{$HOST_COLOR}%}%M"
+host_fhash=`md5sum /etc/hostname | cut -c1-2`
+HOST_FHASH=`echo $host_fhash | awk '{ print toupper($0) }' `
+HOST_FNUM=`echo "obase=10; ibase=16; $HOST_FHASH" | bc`
+host_bhash=`echo $hosh_fhash | md5sum | cut -c1-2`
+HOST_BHASH=`echo $host_bhash | awk '{ print toupper($0) }' `
+HOST_NUM=`echo "obase=10; ibase=16; $HOST_BHASH" | bc`
+
+HOST_FCOLOR=`expr $HOST_NUM % 8`
+HOST_BCOLOR=`expr $(expr $HOST_NUM + 4) % 8`
+
+PROMPT=$PROMPT"%{%F{$HOST_FCOLOR}%K{$HOST_BCOLOR}%}%M"
 
 #white separator
 PROMPT=$PROMPT"%{%F{white}%K{blue}%B%}:"
