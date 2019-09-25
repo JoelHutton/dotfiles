@@ -117,17 +117,17 @@ compinit
 
 if which "nvim" > /dev/null
 then
-  export EDITOR='nvim'
+  export EDITOR=`which nvim`
 elif which "vim" > /dev/null
 then
-  export EDITOR='vim'
+  export EDITOR=`which vim`
 else
-  export EDITOR='vi'
+  export EDITOR=`which vi`
 fi
 
 vim () {
 	echo -ne "\033]12;Orange1\007";
-	$EDITOR "$@";
+	$EDITOR -p "$@";
 	echo -ne "\033]12;White\007";
 }
 
