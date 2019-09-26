@@ -34,7 +34,6 @@ alias .........="cd ../../../../../../../.."
 alias ..........="cd ../../../../../../../../.."
 alias ...........="cd ../../../../../../../../../.."
 alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias apt="sudo apt"
 alias diskspace='setopt dotglob; du -shc ./* | sort -hr;unsetopt dotglob'
 
 setopt histignorealldups
