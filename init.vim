@@ -135,16 +135,13 @@ nnoremap  sh <C-W><C-H>
 "add this in to preserve buffer on quit, creates a delay on leaving
 autocmd VimLeave * call system("echo -n $'" . escape(getreg(), "'") . "' | xsel -ib")
 
-"highlight character 81 on long lines
-au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%80v.', -1)
-
 "wrap git commit messages
 au FileType gitcommit set tw=72
 "set 4 spaces for tab in git commits
 au FileType gitcommit set tabstop=4
 au FileType gitcommit set shiftwidth=4
 au FileType gitcommit set expandtab
-"highlight character 81 on long lines
+"highlight character 72 in git commits
 au FileType gitcommit au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%72v.', -1)
 
 "for when you open a file without sudo by mistake
@@ -193,13 +190,25 @@ nnoremap <leader>l :set filetype=lisp<Cr>
 "au FileType gcc-rtl xnoremap <leader>c 0I;;<Esc>
 
 " Create extra whitespace highlight group in red.
-highlight ExtraWhitespace ctermbg=red guibg=red
+"highlight ExtraWhitespace ctermbg=red guibg=red
 " Match whitespace at end of line.
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-" Match 8 spaces anywhere.
-autocmd BufWinEnter *.md match ExtraWhitespace /\ \{8,}/
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+" Match 5 spaces anywhere.
+"autocmd BufWinEnter * match ExtraWhitespace /\ \{5,}/
 " Match space before tab anywhere.
-autocmd BufWinEnter *.md match ExtraWhitespace /\ \t/
+"autocmd BufWinEnter * match ExtraWhitespace /\ \t/
+
+" Create no space before bracket highlight group in red.
+"highlight NoSpace ctermbg=red guibg=red
+"autocmd BufWinEnter * match ExtraWhitespace /[a-zA-Z0-9](/
+
+" Create full stop space space before end of comment highlight group in red.
+"highlight BadComment ctermbg=red guibg=red
+"autocmd BufWinEnter * match ExtraWhiteSpace /\(\.\ \ \)\@<!\(*\/\)/
+
+"highlight character 81 onwards long lines
+"highlight LongLine ctermbg=red guibg=red
+"autocmd BufWinEnter * match ExtraWhiteSpace /\%>80v.\+/
 
 "persistent undo
 set undofile
@@ -211,8 +220,11 @@ set showtabline=2
 set laststatus=0
 
 "quick go to definition
-noremap <leader>d :YcmCompleter GoToDefinition<Cr>
+noremap <leader>d :YcmCompleter GoToDefinitionElseDeclaration<Cr>
 noremap <leader>D :YcmCompleter GoToDefinition<Cr>
+
+"quick quit
+noremap <leader>q <Esc>:q<Cr>
 
 "quick return
 noremap <leader>o <C-o>
