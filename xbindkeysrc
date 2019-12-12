@@ -1,2 +1,4 @@
 "xdotool key alt+F1"
 	release + b:10
+"xdotool key alt+F1"
+	release + b:2
