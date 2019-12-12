@@ -10,7 +10,10 @@ do
 done
 mkdir -p $HOME/.config/nvim
 mkdir -p $HOME/.config/nvim/bundle/
+mkdir -p $HOME/.config/nvim/after
+
 ln -sf $dir/init.vim $HOME/.config/nvim/init.vim
+ln -sf $dir/nvim/after/syntax $HOME/.config/nvim/after/syntax/
 ln -sf $dir/Vundle.vim $HOME/.config/nvim/bundle/Vundle.vim
 
 sudo apt install -y build-essential cmake python3-dev
