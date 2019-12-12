@@ -1,0 +1,9 @@
+[submodule "Vundle.vim"]
+	path = Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "YouCompleteMe"]
+	path = YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe.git
+[submodule "asyncrun.vim"]
+	path = asyncrun.vim
+	url = https://github.com/skywind3000/asyncrun.vim
