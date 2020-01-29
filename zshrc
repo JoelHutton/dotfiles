@@ -200,17 +200,11 @@ then
 				tmux >/dev/null
 				if [ "$SESSION_TYPE" = "remote/ssh" ]
 				then
-					echo "in ssh session, setting up tmux for ssh"
-					tmux set prefix C-n
-					tmux set -g mouse off
+				  echo "in ssh session, setting up tmux for ssh"
+				  tmux set prefix C-n
+				  tmux set -g mouse off
 				fi
 			fi
-	else
-		if [ "$SESSION_TYPE" = "remote/ssh" ]
-		then
-			echo "in ssh session, setting up tmux for ssh"
-			tmux set prefix C-n
-		fi
 	fi
 fi
 
