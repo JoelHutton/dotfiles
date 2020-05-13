@@ -1,5 +1,8 @@
 #!/bin/bash
+set -x 
 dir="$( cd "$( dirname "$0" )" && pwd )"
+cd $dir
+git submodule update --init --recursive
 for file in $HOME/.vimrc $HOME/.zshrc $HOME/.tmux.conf $HOME/.xbindkeysrc $HOME/.config/nvim/init.vim
 do
 	if [ -e "$file" ] || [ -L "$file" ]
