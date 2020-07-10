@@ -1,6 +1,7 @@
 "filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.config/nvim/plugin
+set rtp+=~/.config/nvim/bundle/asmexplorer
 set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin('~/.config/nvim/bundle')
 
