@@ -74,6 +74,17 @@ HOST_BNUM=`printf "%d" 0x$HOST_BHASH`
 HOST_FCOLOR=`expr $HOST_FNUM % 8`
 HOST_BCOLOR=`expr $HOST_BNUM % 8`
 
+TMUX_PREFIX="C-b"
+if [[ "$HOST" == "blackbeans" ]]
+then
+  TMUX_PREFIX="C-q"
+elif [[ "$HOST" == "staticbeans" ]]
+then
+  TMUX_PREFIX="C-b"
+else
+  TMUX_PREFIX="C-n"
+fi
+
 if [[ "$HOST_FCOLOR" == "$HOST_BCOLOR" ]]
 then
   HOST_BCOLOR=`expr $HOST_FCOLOR + 4`
@@ -177,6 +188,7 @@ if which "tmux" > /dev/null
 then
 	tmux set status-bg $HOST_BCOLOR
 	tmux set status-fg $HOST_FCOLOR
+	tmux set prefix $TMUX_PREFIX
 	#capture a pane
 	alias cap="tmux capture-pane -pS - > $HOME/.tmux.history.\`date '+%Y-%m-%dT%H:%M:%S'\`"
 	#edit a captured pane in vim
