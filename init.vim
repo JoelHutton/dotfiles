@@ -41,18 +41,6 @@ endif
 " turn on this option as well
 "set background=dark
 
-" have Vim jump to the last position when
-" reopening a file
-if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-
-" highlight gcc machine description files
-if has("autocmd")
-	autocmd BufRead *.md  set syntax=gcc-rtl
-	autocmd BufRead *.md  set filetype=gcc-rtl
-endif
 
 " have Vim load indentation rules and plugins
 " according to the detected filetype.
@@ -180,37 +168,37 @@ noremap <leader>f :set foldmethod=syntax<Cr>
 nnoremap <leader>l :set filetype=lisp<Cr>
 
 "quick cpp style comment out line
-"au FileType c noremap <leader>c 0I//<Esc>
-"au FileType c xnoremap <leader>c 0I//<Esc>
-"au FileType cpp noremap <leader>c 0I//<Esc>
-"au FileType cpp xnoremap <leader>c 0I//<Esc>
-"au FileType cc noremap <leader>c 0I//<Esc>
-"au FileType cc xnoremap <leader>c 0I//<Esc>
-"au FileType sh noremap <leader>c 0I#<Esc>
-"au FileType sh xnoremap <leader>c 0I#<Esc>
-"au FileType gcc-rtl noremap <leader>c 0I;;<Esc>
-"au FileType gcc-rtl xnoremap <leader>c 0I;;<Esc>
+au FileType c noremap <leader>c 0I//<Esc>
+au FileType c xnoremap <leader>c 0I//<Esc>
+au FileType cpp noremap <leader>c 0I//<Esc>
+au FileType cpp xnoremap <leader>c 0I//<Esc>
+au FileType cc noremap <leader>c 0I//<Esc>
+au FileType cc xnoremap <leader>c 0I//<Esc>
+au FileType sh noremap <leader>c 0I#<Esc>
+au FileType sh xnoremap <leader>c 0I#<Esc>
+au FileType gcc-rtl noremap <leader>c 0I;;<Esc>
+au FileType gcc-rtl xnoremap <leader>c 0I;;<Esc>
 
 " Create extra whitespace highlight group in red.
-"highlight ExtraWhitespace ctermbg=red guibg=red
+highlight ExtraWhitespace ctermbg=red guibg=red
 " Match whitespace at end of line.
-"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 " Match 5 spaces anywhere.
-"autocmd BufWinEnter * match ExtraWhitespace /\ \{5,}/
+autocmd BufWinEnter * match ExtraWhitespace /\ \{5,}/
 " Match space before tab anywhere.
-"autocmd BufWinEnter * match ExtraWhitespace /\ \t/
+autocmd BufWinEnter * match ExtraWhitespace /\ \t/
 
 " Create no space before bracket highlight group in red.
 "highlight NoSpace ctermbg=red guibg=red
-"autocmd BufWinEnter * match ExtraWhitespace /[a-zA-Z0-9](/
+autocmd BufWinEnter * match ExtraWhitespace /[a-zA-Z0-9](/
 
 " Create full stop space space before end of comment highlight group in red.
 "highlight BadComment ctermbg=red guibg=red
-"autocmd BufWinEnter * match ExtraWhiteSpace /\(\.\ \ \)\@<!\(*\/\)/
+autocmd BufWinEnter * match ExtraWhiteSpace /\(\.\ \ \)\@<!\(*\/\)/
 
 "highlight character 81 onwards long lines
 "highlight LongLine ctermbg=red guibg=red
-"autocmd BufWinEnter * match ExtraWhiteSpace /\%>80v.\+/
+autocmd BufWinEnter * match ExtraWhiteSpace /\%>80v.\+/
 
 "persistent undo
 set undofile
@@ -273,3 +261,9 @@ function! SetStyle()
 endfunction
 
 call SetStyle()
+
+" highlight gcc machine description files
+if has("autocmd")
+	autocmd BufRead *.md  set syntax=gcc-rtl
+	autocmd BufRead *.md  set filetype=gcc-rtl
+endif

@@ -25,12 +25,6 @@ endif
 " turn on this option as well
 set background=dark
 
-" highlight gcc machine description files
-if has("autocmd")
-	autocmd BufRead *.md  set syntax=gcc-rtl
-	autocmd BufRead *.md  set filetype=gcc-rtl
-endif
-
 " have Vim load indentation rules and plugins
 " according to the detected filetype.
 if has("autocmd")
