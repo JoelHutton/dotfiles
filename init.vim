@@ -3,6 +3,7 @@
 set rtp+=~/.config/nvim/plugin
 set rtp+=~/.config/nvim/bundle/asmexplorer
 set rtp+=~/.config/nvim/bundle/Vundle.vim
+set rtp+=~/.config/nvim/bundle/vim-gcc-dev
 call vundle#begin('~/.config/nvim/bundle')
 
 " let Vundle manage Vundle, required
@@ -245,3 +246,30 @@ noremap <leader>r :Run<Cr>
 noremap <leader>e :Eval<Cr>
 noremap <leader>t :vsplit term://zsh<Cr>:set nonu<Cr>i
 noremap <leader>T :split term://zsh<Cr>:set nonu<Cr>i
+
+function! SetStyle()
+  let l:fname = expand("%:p")
+  let l:ext = fnamemodify(l:fname, ":e")
+  let l:c_exts = ['c', 'h', 'cpp', 'cc', 'C', 'H', 'def', 'java']
+  if stridx(l:fname, 'libsanitizer') != -1
+    return
+  endif
+  if l:ext != "py"
+    setlocal tabstop=8
+    setlocal softtabstop=2
+    setlocal shiftwidth=2
+    setlocal noexpandtab
+  endif
+  if &filetype == "gitcommit"
+    setlocal textwidth=72
+  else
+    setlocal textwidth=80
+  endif
+  setlocal formatoptions-=ro formatoptions+=cqlt
+  if index(l:c_exts, l:ext) != -1 || &filetype == "c" || &filetype == "cpp"
+    setlocal cindent
+    setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,f0,h2,p4,t0,+2,(0,u0,w1,m0
+  endif
+endfunction
+
+call SetStyle()
