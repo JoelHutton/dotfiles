@@ -1,3 +1,4 @@
+"set rtp+=/home/joehut01/.vim/bundle/asm-explorer
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
 " the call to :runtime you can find below.  If you wish to change any of those
 " settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
@@ -22,14 +23,7 @@ endif
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-"set background=dark
-
-" have Vim jump to the last position when
-" reopening a file
-if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
+set background=dark
 
 " highlight gcc machine description files
 if has("autocmd")
