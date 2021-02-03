@@ -1,7 +1,7 @@
 "filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.config/nvim/plugin
-set rtp+=~/.config/nvim/bundle/asmexplorer
+set rtp+=~/.config/nvim/bundle/asm-explorer
 set rtp+=~/.config/nvim/bundle/Vundle.vim
 set rtp+=~/.config/nvim/bundle/vim-gcc-dev
 call vundle#begin('~/.config/nvim/bundle')
@@ -184,21 +184,21 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 " Match whitespace at end of line.
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 " Match 5 spaces anywhere.
-autocmd BufWinEnter * match ExtraWhitespace /\ \{5,}/
-" Match space before tab anywhere.
-autocmd BufWinEnter * match ExtraWhitespace /\ \t/
-
-" Create no space before bracket highlight group in red.
-"highlight NoSpace ctermbg=red guibg=red
-autocmd BufWinEnter * match ExtraWhitespace /[a-zA-Z0-9](/
-
-" Create full stop space space before end of comment highlight group in red.
-"highlight BadComment ctermbg=red guibg=red
-autocmd BufWinEnter * match ExtraWhiteSpace /\(\.\ \ \)\@<!\(*\/\)/
-
-"highlight character 81 onwards long lines
-"highlight LongLine ctermbg=red guibg=red
-autocmd BufWinEnter * match ExtraWhiteSpace /\%>80v.\+/
+"autocmd BufWinEnter * match ExtraWhitespace /\ \{5,}/
+"" Match space before tab anywhere.
+"autocmd BufWinEnter * match ExtraWhitespace /\ \t/
+"
+"" Create no space before bracket highlight group in red.
+""highlight NoSpace ctermbg=red guibg=red
+"autocmd BufWinEnter * match ExtraWhitespace /[a-zA-Z0-9](/
+"
+"" Create full stop space space before end of comment highlight group in red.
+""highlight BadComment ctermbg=red guibg=red
+"autocmd BufWinEnter * match ExtraWhiteSpace /\(\.\ \ \)\@<!\(*\/\)/
+"
+""highlight character 81 onwards long lines
+""highlight LongLine ctermbg=red guibg=red
+"autocmd BufWinEnter * match ExtraWhiteSpace /\%>80v.\+/
 
 "persistent undo
 set undofile
