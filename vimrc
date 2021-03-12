@@ -73,8 +73,6 @@ cmap jj <Down>
 nmap S <Nop>
 nmap s <Nop>
 
-nmap <C-i> ggVG=<C-o><C-o>
-
 set number
 set nowrap
 
