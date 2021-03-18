@@ -223,22 +223,10 @@ then
 	fi
 fi
 
-# Global git hooks
-# git config --global core.hooksPath $HOME/git/scripts/githooks
-
-# do not store commands that are wrong in history (disabled because it gets annoying)
-#zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
-
-# ARM part
-export PATH=$HOME/gnu-work/tools/bin:$PATH
-export CC64=aarch64-linux-gnu-
-export CC32=arm-linux-gnueabihf-
-export CCEABI=arm-eabi-
-export CCNONEEABI=arm-none-eabi
-export CHECKPATCH=$HOME/bin/checkpatch/checkpatch.pl
 umask 0027
-alias ds5='/usr/local/DS-5_v5.28.1/bin/eclipse'
 if [ -f $HOME/.messages ]
 then
 	cat $HOME/.messages
 fi
+
+source ~/.zshrc_local
