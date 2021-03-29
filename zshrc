@@ -233,5 +233,7 @@ if [ -z "$SSH_AUTH_SOCK" ]
 then
   eval `ssh-agent -s` > /dev/null 2>&1
 fi
-
-source ~/.zshrc_local
+if [ -e "~/.zshrc_local" ]
+then
+  source ~/.zshrc_local
+fi
