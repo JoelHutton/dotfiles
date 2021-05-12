@@ -77,7 +77,7 @@ HOST_BCOLOR=`expr $HOST_BNUM % 8`
 if [ -z "$TMUX_PREFIX" ]
 then
   TMUX_PREFIX="C-b"
-  if [[ "$HOST" == "blackbeans" || "$HOST" == "R910NSQ2" ]]
+  if [[ "$HOST" == "blackbeans" || "$HOST" == "R910NSQ2" || "$HOST" == "R90XJLQ3" ]]
   then
     TMUX_PREFIX="C-q"
   elif [[ "$HOST" == "staticbeans" ]]
