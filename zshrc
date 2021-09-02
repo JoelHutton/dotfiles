@@ -83,6 +83,9 @@ then
   elif [[ "$HOST" == "staticbeans" ]]
   then
     TMUX_PREFIX="C-b"
+  elif [[ "$SESSION_TYPE" == "remote/ssh" ]]
+  then
+    TMUX_PREFIX="C-n"
   fi
   export TMUX_PREFIX
 else
