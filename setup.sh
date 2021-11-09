@@ -19,10 +19,10 @@ ln -sf $dir/init.vim $HOME/.config/nvim/init.vim
 ln -sf $dir/nvim/after/syntax $HOME/.config/nvim/after/syntax/
 ln -sf $dir/Vundle.vim $HOME/.config/nvim/bundle/Vundle.vim
 
-sudo apt install -y build-essential cmake python3-dev
-ln -sf $dir/YouCompleteMe $HOME/.config/nvim/bundle/YouCompleteMe
-ln -sf $dir/vim-gcc-dev $HOME/.config/nvim/bundle/vim-gcc-dev
-ln -sf $dir/vim-gcc-dev $HOME/.vim/bundle/vim-gcc-dev
+#sudo apt install -y build-essential cmake python3-dev
+#ln -sf $dir/YouCompleteMe $HOME/.config/nvim/bundle/YouCompleteMe
+#ln -sf $dir/vim-gcc-dev $HOME/.config/nvim/bundle/vim-gcc-dev
+#ln -sf $dir/vim-gcc-dev $HOME/.vim/bundle/vim-gcc-dev
 
 ORIG_DIR=$PWD
 cd $HOME/.config/nvim/bundle/YouCompleteMe
