@@ -77,12 +77,15 @@ HOST_BCOLOR=`expr $HOST_BNUM % 8`
 if [ -z "$TMUX_PREFIX" ]
 then
   TMUX_PREFIX="C-b"
-  if [[ "$HOST" == "blackbeans" || "$HOST" == "R910NSQ2" ]]
+  if [[ "$HOST" == "blackbeans" || "$HOST" == "R910NSQ2" || "$HOST" == "R90XJLQ3" ]]
   then
     TMUX_PREFIX="C-q"
   elif [[ "$HOST" == "staticbeans" ]]
   then
     TMUX_PREFIX="C-b"
+  elif [[ "$SESSION_TYPE" == "remote/ssh" ]]
+  then
+    TMUX_PREFIX="C-n"
   fi
   export TMUX_PREFIX
 else
@@ -238,6 +241,7 @@ if [ -z "$SSH_AUTH_SOCK" ]
 then
   eval `ssh-agent -s` > /dev/null 2>&1
 fi
-
-set bracketed-paste
-source ~/.zshrc_local
+if [ -e "~/.zshrc_local" ]
+then
+  source ~/.zshrc_local
+fi
