@@ -14,7 +14,10 @@ SAVEHIST=1000000
 HISTFILE=~/.zsh_history
 
 # colours in terminal programs 
-alias ls='ls --color=auto'
+if ls --color=auto > /dev/null 2>&1
+then
+  alias ls='ls --color=auto'
+fi
 alias grep='grep --color=auto --exclude=.git'
 alias fgrep='fgrep --color=auto --exclude=.git'
 alias egrep='egrep --color=auto --exclude=.git'
@@ -41,8 +44,8 @@ setopt histignorealldups
 # Use vim keybings
 bindkey -e
 # partial command search with up arrow
-bindkey "^[OA" history-beginning-search-backward
-bindkey "^[OB" history-beginning-search-forward
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 # Emacs style binding Ctrl-X Ctrl-E for edit command in editor
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -62,17 +65,23 @@ PROMPT=$PROMPT"%{%F{white}%}@"
 #green host
 #PROMPT=$PROMPT"%{%F{green}%}%M"
 
-#give each host a unique color
-host_fhash=`md5sum /etc/hostname | cut -c1-2`
-HOST_FHASH=`echo $host_fhash | awk '{ print toupper($0) }' `
-HOST_FNUM=`printf "%d" 0x$HOST_FHASH`
+if which md5sum > /dev/null
+then
+  #give each host a unique color
+  host_fhash=`md5sum /etc/hostname | cut -c1-2`
+  HOST_FHASH=`echo $host_fhash | awk '{ print toupper($0) }' `
+  HOST_FNUM=`printf "%d" 0x$HOST_FHASH`
 
-host_bhash=`echo $host_fhash | md5sum | cut -c1-2`
-HOST_BHASH=`echo $host_bhash | awk '{ print toupper($0) }' `
-HOST_BNUM=`printf "%d" 0x$HOST_BHASH`
+  host_bhash=`echo $host_fhash | md5sum | cut -c1-2`
+  HOST_BHASH=`echo $host_bhash | awk '{ print toupper($0) }' `
+  HOST_BNUM=`printf "%d" 0x$HOST_BHASH`
 
-HOST_FCOLOR=`expr $HOST_FNUM % 8`
-HOST_BCOLOR=`expr $HOST_BNUM % 8`
+  HOST_FCOLOR=`expr $HOST_FNUM % 8`
+  HOST_BCOLOR=`expr $HOST_BNUM % 8`
+else
+  HOST_FCOLOR=green
+  HOST_BCOLOR=blue
+fi
 
 if [ -z "$TMUX_PREFIX" ]
 then
@@ -114,7 +123,10 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
+if which dircolors > /dev/null
+then
+  eval "$(dircolors -b)"
+fi
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
